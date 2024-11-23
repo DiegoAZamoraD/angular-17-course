@@ -1,0 +1,66 @@
+<!-- anterior forma ha yque declarar un template<div class="card-container" *ngIf="todoData; else notCardInfo"> -->
+<!-- <div class="card-container {{first ? 'first' : ''}} {{last ? 'last' : ''}}"> hay una forma mejor 
+    con directivas de clase -->
+<!--Esta es una forma pasando un arreglo pero tambien puedo pasar un objeto 
+    <div class="card-container"
+    [ngClass]="[first ? 'first': '',last ? 'last': '' ]"
+>    -->
+<div class="card-container"
+    [ngClass]="
+        {
+            'first': first,
+            'last': last,
+            'odd': odd,
+            'even': even
+        }
+    "
+>
+  @if(todoData){
+    <span
+        class="icon-close"
+        (click)="onClickIcon.emit(true)"
+        (click)="onClickIconX.emit(todoData)"
+        >x</span
+    >
+    <div class="card-body">
+        <div class="card-content">
+        <h3>{{ todoData.id }} {{ todoData.title }}</h3>
+        <p>{{ todoData.description }}</p>
+        </div>
+    </div>
+    <div class="card-content pills-container">
+        <p>
+        Estado:
+        <span   
+            class="status"
+            [ngStyle]="{'backGround-color':todoData.color.status}"
+        >
+            {{ todoData.status }}
+        </span>
+        </p>
+        <p>
+        Prioridad:
+        <span class="priority"
+        [ngStyle]="{'backGround-color':todoData.color.priority}">
+            {{ todoData.priority }}
+        </span>
+        </p>
+        <p>Fecha límite: {{ todoData.deadLine }}</p>
+    </div>
+    <section class="progressbar-container">
+        <div class="progressbar">
+        <div class="progressbar__fill"></div>
+        </div>
+        <span>{{ todoData.progress }} %</span>
+    </section>
+  } @else {
+    <div class="card-container">
+        No hay Datos
+    </div>
+  }
+</div>
+<!-- Aqui declaramos el template que maneja el else del ngIf <ng-template #notCardInfo>
+    <div class="card-container">
+        No hay Datos
+    </div>
+</ng-template> -->
